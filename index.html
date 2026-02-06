@@ -3,157 +3,202 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scores – Maisons</title>
+  <title>POINTS – Maisons</title>
 
-  <!-- Librairie d'animation des nombres -->
+  <!-- Animation des nombres -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.min.js"></script>
 
   <style>
+    /* =============================
+       COULEURS EXACTES DE TON EXCEL
+       ============================= */
+    :root{
+      --c1: #F5B1ED; /* Aurion */
+      --c2: #8FED9C; /* Esmeris */
+      --c3: #FFB7B7; /* Rubrix */
+      --border: #111;
+    }
+
     body{
-      font-family: system-ui, Arial;
       margin:0;
-      background:#f3f4f6;
+      font-family: system-ui, Arial, sans-serif;
+      background:#f2f2f2;
       display:flex;
       align-items:center;
       justify-content:center;
       min-height:100vh;
-      padding:16px;
+      padding:20px;
     }
-    .board{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(220px, 1fr));
-      gap:20px;
-      width:min(980px, 100%);
-    }
-    .card{
+
+    .frame{
+      width:min(1000px, 100%);
       background:#fff;
-      border-radius:16px;
-      padding:24px;
-      box-shadow:0 10px 30px rgba(0,0,0,.12);
+      border:3px solid var(--border);
+      box-shadow:0 12px 30px rgba(0,0,0,.15);
+    }
+
+    .title{
+      text-align:center;
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:3px;
+      padding:16px;
+      border-bottom:3px solid var(--border);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+    }
+
+    .col{
+      min-height:340px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:20px 10px;
+      border-right:3px solid var(--border);
+    }
+    .col:last-child{ border-right:none; }
+
+    .c1{ background:var(--c1); }
+    .c2{ background:var(--c2); }
+    .c3{ background:var(--c3); }
+
+    .crest{
+      width:150px;
+      height:150px;
+      object-fit:contain;
+      margin-bottom:10px;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.3));
+    }
+
+    .name{
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:auto;
+    }
+
+    .score{
+      font-size:64px;
+      font-weight:900;
+      line-height:1;
+      margin-top:20px;
+    }
+
+    .bottom{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-top:3px solid var(--border);
+      background:#fff;
+      font-size:14px;
       text-align:center;
     }
-    .label{
-      font-size:18px;
-      opacity:.75;
-      margin-bottom:10px;
+    .bottom div{
+      padding:8px;
+      border-right:3px solid var(--border);
+      opacity:.7;
     }
-    .value{
-      font-size:64px;
-      font-weight:800;
-      letter-spacing:1px;
-      line-height:1;
-    }
-    .status{
-      font-size:12px;
-      opacity:.6;
-      margin-top:10px;
-      min-height:16px;
-    }
-    @media (max-width: 820px){
-      .board{ grid-template-columns:1fr; }
-      .value{ font-size:56px; }
+    .bottom div:last-child{ border-right:none; }
+
+    @media(max-width:850px){
+      .grid{ grid-template-columns:1fr; }
+      .col{ border-right:none; border-bottom:3px solid var(--border); }
+      .col:last-child{ border-bottom:none; }
+      .bottom{ grid-template-columns:1fr; }
+      .bottom div{ border-right:none; border-bottom:3px solid var(--border); }
+      .bottom div:last-child{ border-bottom:none; }
     }
   </style>
-  :root{
-  /* Couleurs EXACTES de ton Excel */
-  --c1: #F5B1ED; /* maison 1 */
-  --c2: #8FED9C; /* maison 2 */
-  --c3: #FFB7B7; /* maison 3 */
-  --border: #111;
-}
-
 </head>
 
 <body>
-  <div class="board">
-    <div class="card">
-      <div class="label">AURION</div>
-      <div id="score1" class="value">0</div>
-      <div id="s1" class="status">Connexion…</div>
+
+<div class="frame">
+  <div class="title">POINTS</div>
+
+  <div class="grid">
+    <div class="col c1">
+      <img class="crest" src="blason1.png" alt="Blason Aurion">
+      <div class="name">AURION</div>
+      <div id="score1" class="score">0</div>
     </div>
 
-    <div class="card">
-      <div class="label">ESMERIS</div>
-      <div id="score2" class="value">0</div>
-      <div id="s2" class="status">Connexion…</div>
+    <div class="col c2">
+      <img class="crest" src="blason2.png" alt="Blason Esmeris">
+      <div class="name">ESMERIS</div>
+      <div id="score2" class="score">0</div>
     </div>
 
-    <div class="card">
-      <div class="label">RUBRIX</div>
-      <div id="score3" class="value">0</div>
-      <div id="s3" class="status">Connexion…</div>
+    <div class="col c3">
+      <img class="crest" src="blason3.png" alt="Blason Rubrix">
+      <div class="name">RUBRIX</div>
+      <div id="score3" class="score">0</div>
     </div>
   </div>
 
+  <div class="bottom">
+    <div id="s1">Connexion…</div>
+    <div id="s2">Connexion…</div>
+    <div id="s3">Connexion…</div>
+  </div>
+</div>
+
 <script>
-  // ======= TES INFOS =======
+  /* =============================
+     GOOGLE SHEET
+     ============================= */
   const SHEET_ID = "1AAyqYtidWn2S72nHS7-tnQzxmw3mb_hZQ0nv4sChCr4";
   const SHEET_NAME = "Maisons";
-  const REFRESH_MS = 3000; // mise à jour toutes les 3 secondes
+  const REFRESH_MS = 3000;
 
-  // Tes zones : G17:H18 , I17:J18 , K17:L18
-  // On lit la cellule en haut à gauche de chaque bloc : G17, I17, K17
+  // Blocs fusionnés → cellule en haut à gauche
   const scores = [
-    { id: "score1", col: "G", row: 17, status: "s1" },
-    { id: "score2", col: "I", row: 17, status: "s2" },
-    { id: "score3", col: "K", row: 17, status: "s3" },
+    { el:"score1", col:"G", row:17, status:"s1" },
+    { el:"score2", col:"I", row:17, status:"s2" },
+    { el:"score3", col:"K", row:17, status:"s3" }
   ];
 
-  // ======= AIDE : construit l'URL Google Sheets (sans clé API) =======
-  function makeUrl(col, row){
+  function makeUrl(col,row){
     const range = `${col}${row}:${col}${row}`;
     const tq = encodeURIComponent(`select ${col}`);
     return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&range=${encodeURIComponent(range)}&tq=${tq}&tqx=out:json`;
   }
 
-  // ======= Compteurs animés =======
-  const counters = {};
-  for (const s of scores){
-    counters[s.id] = {
-      current: 0,
-      anim: new countUp.CountUp(s.id, 0, {
-        duration: 0.8,
-        separator: " "
-      })
+  const anims = {};
+  scores.forEach(s=>{
+    anims[s.el] = {
+      current:0,
+      anim:new countUp.CountUp(s.el,0,{duration:0.8,separator:" "})
     };
-  }
+  });
 
   async function updateScore(s){
-    const statusEl = document.getElementById(s.status);
-
+    const st = document.getElementById(s.status);
     try{
-      const res = await fetch(makeUrl(s.col, s.row), { cache: "no-store" });
-      const text = await res.text();
+      const r = await fetch(makeUrl(s.col,s.row),{cache:"no-store"});
+      const t = await r.text();
+      const j = JSON.parse(t.substring(t.indexOf("{"),t.lastIndexOf("}")+1));
+      const v = Number(j.table.rows[0].c[0].v);
 
-      // gviz renvoie du "pseudo json" entouré de texte -> on extrait l'objet JSON
-      const jsonStr = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
-      const data = JSON.parse(jsonStr);
-
-      const raw = data?.table?.rows?.[0]?.c?.[0]?.v;
-      const next = Number(raw);
-
-      if (!Number.isFinite(next)) throw new Error("Valeur non numérique");
-
-      const c = counters[s.id];
-      if (next !== c.current){
-        c.anim.update(next);
-        c.current = next;
-        statusEl.textContent = "Mis à jour";
-      } else {
-        statusEl.textContent = "—";
+      const a = anims[s.el];
+      if(v !== a.current){
+        a.anim.update(v);
+        a.current = v;
+        st.textContent = "Mis à jour";
+      }else{
+        st.textContent = "—";
       }
-    } catch (e){
-      statusEl.textContent = "Erreur (partage / onglet / cellule / valeur)";
+    }catch{
+      st.textContent = "Erreur";
     }
   }
 
-  function tick(){
-    for (const s of scores) updateScore(s);
-  }
-
-  // init + refresh
+  function tick(){ scores.forEach(updateScore); }
   tick();
   setInterval(tick, REFRESH_MS);
 </script>
+
 </body>
 </html>
+
